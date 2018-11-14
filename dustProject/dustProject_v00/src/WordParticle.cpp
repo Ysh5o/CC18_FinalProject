@@ -18,7 +18,16 @@ WordParticle::WordParticle()
 void WordParticle::update()
 {
     //number means the spead of fading away. each second 60 frames. RGB(255-1)=254/60=4
-    opacity-=5;
+    
+    
+    if(opacity < 0)
+    {
+        opacity = 255;
+    }
+    else
+    {
+        opacity-=5;
+    }
     
     
     // THESE ARE ALL THE SAME THING, just different syntax.

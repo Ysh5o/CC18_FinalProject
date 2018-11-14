@@ -26,13 +26,23 @@ void ofApp::setup()
     prevPixels.set(255);
     drawPixels.set(255);
     
-    for(int i = 0; i < spacingValue*spacingValue; i+=spacingValue)
+//    for(int i = 0; i < spacingValue*spacingValue; i+=spacingValue)
+//    {
+//        WordParticle p;
+//        p.opacity = 255;
+//        wordParticles.push_back(p);
+//    }
+//
+    for(int y=0; y<gh; y+=spacingValue)
     {
-        WordParticle p;
-        p.opacity = 255;
-        wordParticles.push_back(p);
+        for(int x=0; x<gw; x+=spacingValue)
+        {
+            WordParticle p;
+            p.position = {x,y,0};
+            p.opacity=255;
+            p.word = phrase[ofWrap(y*x/spacingValue, 0, 23)];
+        }
     }
-    
     
 }
 
@@ -51,6 +61,7 @@ void ofApp::update()
         {
             for (int y = 0; y < gh; y++)
             {
+                wordParticles[y * (gw/spacingValue) + x].update();
                 // get current pixels brightness
                 // ofColor color = currentPixels.getColor(x, y);
                 // brightness = color.getBrightness();
@@ -87,8 +98,8 @@ void ofApp::draw()
     
     
     // draw semi-transparent rectangles to create a fading effect
-    ofSetColor(255, 2);
-    ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+    //ofSetColor(255, 2);
+    //ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
     
     //texture.draw(0, 0);
     
@@ -129,10 +140,10 @@ void ofApp::draw()
 //                    ofSetColor(0, 150);
 //                    ofScale(randomNumEng, randomNumEng);
 //                }
-                ofSetColor(0, 150);
+                ofSetColor(0, wordParticles[y * (gw/spacingValue) + x].opacity);
                 ofPushMatrix();
                 ofScale(gw/ofGetWidth(), gw/ofGetHeight());
-                font.drawString(phrase[ofWrap(y*x/spacingValue*spacingValue, 0, 23)], 0, 0);
+                font.drawString(phrase[ofWrap(y*x/spacingValue, 0, 23)], 0, 0);
                 ofPopMatrix();
 //                if(wordIndex < phrase.size() - 1)
 //                {

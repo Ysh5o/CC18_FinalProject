@@ -27,7 +27,8 @@ public:
     // variables
    
     glm::vec3 position;
-    ofColor color;
+
+    string word;
     
     ofTrueTypeFont font;
     
